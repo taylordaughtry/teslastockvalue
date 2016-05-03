@@ -1,0 +1,119 @@
+#------------------------------------
+	# Staging Authentication
+#------------------------------------
+
+# AuthName "Development Area"
+# AuthType Basic
+# AuthUserFile /home/.htpasswd
+## AuthUserFile /home/locked/.htpasswd
+# AuthGroupFile /dev/null
+# require valid-user
+
+# Uncomment for external service testing only
+# Satisfy Any
+# Allow from all
+
+
+#------------------------------------
+	# Maintenance
+#------------------------------------
+
+# Redirect /cms /maintenance\.php$
+
+# RewriteCond %{REQUEST_URI} !^/maintenance.php$
+# RewriteCond %{REMOTE_ADDR} !^23.31.162.
+# RewriteCond $1 !^(assets|uploads) [NC]
+# RewriteRule ^(.*)$ /maintenance.php [R=307,L]
+
+
+#------------------------------------
+	# Setup
+#------------------------------------
+
+RewriteEngine On
+Options +FollowSymLinks -Indexes -MultiViews
+
+# Character set
+AddDefaultCharset utf-8
+AddCharset utf-8 .atom .css .geojson .js .json .jsonld .manifest .map .rss .xml
+
+# Disable iframe embedding
+Header set X-Frame-Options SAMEORIGIN
+
+# Internet Explorer document mode
+Header set X-UA-Compatible "IE=edge"
+
+# HTTP Strict Transport Security
+# Header always set Strict-Transport-Security "max-age=7776000; includeSubDomains"
+
+# Conditionally target static assets
+<FilesMatch "\.(css|eot|gif|ico|jpe?g|otf|png|svg|ttf|webp|woff2?)$">
+	SetEnv IS_STATIC true
+	Header set Cache-control max-age=2592000
+	Header unset X-Frame-Options
+	Header unset X-UA-Compatible
+</FilesMatch>
+
+
+#------------------------------------
+	# Remote Assets
+#------------------------------------
+
+# Cross-origin images
+<FilesMatch "\.(bmp|gif|ico|jpe?g|png|svg|webp)$">
+	SetEnvIf Origin ":" IS_CORS
+	Header always set Access-Control-Allow-Origin "*" env=IS_CORS
+</FilesMatch>
+
+# Cross-origin web fonts
+<FilesMatch "\.(eot|otf|ttf|woff2?)$">
+	Header always set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
+
+#------------------------------------
+	# Errors
+#------------------------------------
+
+ErrorDocument 404 /index.php/404
+
+
+#------------------------------------
+	# Project
+#------------------------------------
+
+# php_value newrelic.appname "sandbox-xxx"
+
+
+#------------------------------------
+	# Rewrites
+#------------------------------------
+
+# Force www
+# RewriteCond %{HTTP_HOST} !^www.domain.com$ [NC]
+# RewriteRule ^(.*)$ https://www.domain.com/$1 [R=301,L]
+
+# Force SSL
+RewriteCond %{HTTPS} !on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+# Remove multiple slashes
+RewriteCond %{THE_REQUEST} //
+RewriteRule ^(.*)$ /$1 [R=301,L]
+
+# Remove index reference
+RewriteCond %{REQUEST_URI} ^(.*/)index.php$ [NC]
+RewriteRule . %1 [R=301,L]
+
+# Sitemap
+RewriteRule ^sitemap.xml$ /sitemaps/index.xml [R=301,L]
+
+# Craft rewrite
+RewriteCond %{ENV:IS_STATIC} !true
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php/$1 [L]

@@ -1,0 +1,121 @@
+{
+	"name": "Tesla Stock Value",
+	"paths": {
+		"root": "public_html",
+		"assets": "assets",
+		"source": "source"
+	},
+	"data": {
+
+	},
+	"style": {
+		"data": {
+
+		},
+		"core": {
+			"namespace": false,
+			"features": {
+				"buttons": true,
+				"code": true,
+				"forms": true,
+				"print": true,
+				"tables": true
+			},
+			"responsive": {
+				"enable": true,
+				"offset": 25,
+				"breakpoints": {
+					"mobileLandscape": 480,
+					"tabletPortrait": 768,
+					"desktopSmall": 1024,
+					"desktopMedium": 1280,
+					"desktopLarge": 1440
+				}
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"maintenance.min.css": "custom/maintenance.less"
+		}
+	},
+	"script": {
+		"data": {
+
+		},
+		"core": {
+			"enable": true,
+			"namespace": "Wee",
+			"features": {
+				"animate": true,
+				"assets": true,
+				"chain": true,
+				"data": true,
+				"dom": true,
+				"events": true,
+				"history": true,
+				"routes": true,
+				"screen": true,
+				"touch": true,
+				"view": true
+			}
+		},
+		"build": [
+
+		],
+		"compile": {
+			"ie9.min.js": [
+				"polyfill/wee.placeholder.js",
+				"polyfill/wee.slice.js"
+			],
+			"testing.min.js": "custom/testing.js"
+		},
+		"validate": {
+			"watch": true,
+			"jscs": "source/.jscs.json",
+			"jshint": "source/.jshintrc"
+		},
+		"sourceMaps": true
+	},
+	"generator": {
+		"enable": true,
+		"build": [
+			"source/modules/guide/config.json"
+		]
+	},
+	"defaultCommand": "run:local",
+	"server": {
+		"ghostMode": false,
+		"host": "auto",
+		"port": 9000,
+		"inject": [
+			"/assets/js/testing.min.js"
+		],
+		"reload": {
+			"enable": true,
+			"ignore": [
+				"/cms"
+			],
+			"watch": {
+				"root": true,
+				"paths": [
+					"craft/templates"
+				],
+				"extensions": [
+					"html",
+					"twig"
+				]
+			}
+		},
+		"tasks": {
+			"local": {
+				"https": true,
+				"proxy": "https://teslastockvalue.dev"
+			},
+			"static": {
+				"https": true
+			}
+		}
+	}
+}

@@ -1,0 +1,93 @@
+#------------------------------------
+	# Project
+#------------------------------------
+
+# Custom exclusions here
+
+
+#------------------------------------
+	# Backups
+#------------------------------------
+
+backups/*
+
+
+#------------------------------------
+	# Craft
+#------------------------------------
+
+# htaccess
+public_html/.htaccess
+
+# Local templates
+craft/templates/_local/*
+
+# System Caches
+craft/storage/backups/*
+craft/storage/runtime/*
+craft/storage/userphotos/*
+
+# Local Dev
+craft/config/local/*
+
+# Remote Dev
+craft/config/db.php
+
+# Custom upload directories
+public_html/uploads/**/*.*
+!public_html/uploads/*/*.html
+
+
+#------------------------------------
+	# Wee
+#------------------------------------
+
+node_modules/
+out/
+
+
+#------------------------------------
+	# Tools
+#------------------------------------
+
+.bundle
+.idea/
+.komodotools
+.project
+.settings/
+.tern-project
+.tmproj
+.vscode/
+*.esproj
+*.komodoproject
+*.sublime-*
+browserstack.js
+codekit-config.json
+prepros.json
+
+
+#------------------------------------
+	# System
+#------------------------------------
+
+.cache
+.DS_Store
+.tmp
+*.diff
+*.err
+*.lock
+*.log
+*.orig
+*.rej
+*.swo
+*.swp
+*.vi
+error_log
+Thumbs.db
+
+
+#------------------------------------
+	# Gitkeep
+#------------------------------------
+
+!.gitkeep

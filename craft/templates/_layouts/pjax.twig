@@ -1,0 +1,14 @@
+{% set conf = craft.config %}
+{% set entry = entry is defined ? entry : conf.entryDefaults %}
+
+{% cache unless conf.env == 'local' or noCache is defined %}
+
+{% spaceless %}
+<title>{% if entry.seoTitle is not empty %}{{ entry.seoTitle }} | {% elseif title is defined %}{{ title }} | {% elseif entry.title is not empty %}{{ entry.title }} | {% endif %}{{ siteName }}</title>
+
+<main role="main">
+	{{ block('content') }}
+</main>
+{% endspaceless %}
+
+{% endcache %}

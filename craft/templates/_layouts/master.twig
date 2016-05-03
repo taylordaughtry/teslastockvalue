@@ -1,0 +1,88 @@
+{% set conf = craft.config %}
+{% set entry = entry is defined ? entry : conf.entryDefaults %}
+
+{% cache unless conf.env == 'local' or noCache is defined %}
+
+{% spaceless %}
+<!doctype html>
+<html lang="en" id="global" itemscope itemtype="http://schema.org/WebPage">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{% if entry.seoTitle is not empty %}{{ entry.seoTitle }} | {% elseif title is defined %}{{ title }} | {% elseif entry.title is not empty %}{{ entry.title }} | {% endif %}{{ siteName }}</title>
+
+	{% if entry.seoDescription is not empty or description is defined %}
+	<meta name="description" content="{% if entry.seoDescription is not empty %}{{ entry.seoDescription }}{% elseif description is defined %}{{ description }}{% endif %}">
+	{% endif %}
+
+	{% if entry.seoNoIndex %}
+	<meta name="robots" content="noindex, follow">
+	{% endif %}
+
+	<link rel="canonical" href="{{ canonical|default(craft.request.url) }}">
+
+	<link rel="apple-touch-icon" href="/assets/img/icons/touch.png">
+	<link rel="mask-icon" href="/assets/img/icons/pin.svg" color="#349bb9">
+	<link rel="publisher" href="https://plus.google.com/{{ social.googlePageID }}">
+
+	<meta name="twitter:card" content="{% if twCard is defined %}{{ twCard }}{% elseif shareImage is defined %}summary_large_image{% else %}summary{% endif %}">
+	<meta name="twitter:site" content="@{{ social.twitterHandle }}">
+	{{ cardData|default('') }}
+
+	<meta property="og:type" content="{{ ogType|default('website') }}">
+	<meta property="og:site_name" content="{{ siteName }}">
+	<meta property="og:url" content="{{ craft.request.url }}" itemprop="url">
+	<meta property="og:title" content="{% if ogTitle is defined %}{{ ogTitle }}{% elseif entry.seoTitle is not empty %}{{ entry.seoTitle }}{% elseif entry.title is not empty %}{{ entry.title }}{% elseif title is defined %}{{ title }}{% endif %}" itemprop="name">
+	{% if ogTitle is defined or entry.seoDescription is not empty or description is defined %}
+	<meta property="og:description" content="{% if ogTitle is defined %}{{ ogTitle }}{% elseif entry.seoDescription is not empty %}{{ entry.seoDescription }}{% elseif description is defined %}{{ description }}{% endif %}" itemprop="description">
+	{% endif %}
+	<meta property="og:image" content="{{ shareImage|default(conf.assetUrl ~ '/img/share.png') }}" itemprop="image">
+	{{ ogData|default('') }}
+
+	{% if ogType is defined and ogType == 'article' and entry.title is not empty %}
+	<meta property="article:published_time" content="{{ entry.dateCreated.iso8601 }}" itemprop="datePublished">
+	<meta property="article:modified_time" content="{{ entry.dateUpdated.iso8601 }}" itemprop="dateModified">
+	{% endif %}
+
+	<link rel="stylesheet" href="{{ conf.assetUrl }}/css/style.min.css?{{ conf.cssVersion }}">
+	{{ system.headerResources|raw }}
+	{{ getHeadHtml() }}
+
+	<!--[if lte IE 9]>
+	<script src="{{ conf.assetUrl }}/js/ie9.min.js?{{ conf.jsLegacyVersion }}"></script>
+	<![endif]-->
+
+	{% if not craft.request.isLivePreview %}
+		{% if conf.env == 'prod' %}
+			{{ system.trackingCode|raw }}
+		{% else %}
+			{{ system.testTrackingCode|raw }}
+		{% endif %}
+	{% endif %}
+</head>
+<body>
+	<div class="container">
+		<header role="banner">
+			<a href="/" rel="home">
+				<img src="{{ conf.assetUrl }}/img/brand.svg" alt="{{ siteName }}">
+			</a>
+		</header>
+
+		<main role="main">
+			{{ block('content') }}
+		</main>
+
+		<footer role="contentinfo">
+			<small>&copy; {{ now.year }}</small>
+		</footer>
+	</div>
+
+	{{ system.leadFooterResources|raw }}
+	<script src="{{ conf.assetUrl }}/js/script.min.js?{{ conf.jsVersion }}"></script>
+	{{ getFootHtml() }}
+	{{ system.footerResources|raw }}
+</body>
+</html>
+{% endspaceless %}
+
+{% endcache %}

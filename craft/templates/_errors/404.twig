@@ -1,0 +1,9 @@
+{% extends craft.config.defaultLayout %}
+
+{% set entry = craft.entries.section('notFound').first %}
+{% set noCache = true %}
+
+{% block content %}
+	<h1>{{ entry.title }}</h1>
+	{{ entry.body }}
+{% endblock %}

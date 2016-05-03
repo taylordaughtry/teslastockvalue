@@ -1,0 +1,15 @@
+{
+	"buttons": ["format", "bold", "italic", "lists", "link", "file", "horizontalrule"],
+	"plugins": ["fullscreen", "source"],
+	"formatting": ["pre", "blockquote", "h2", "h3", "h4", "h5", "h6"],
+	"formattingAdd": [
+		{
+			"title": "Left Align",
+			"args": ["img", "class", "img-left", "toggle"]
+		},
+		{
+			"title": "Right Align",
+			"args": ["img", "class", "img-right", "toggle"]
+		}
+	]
+}

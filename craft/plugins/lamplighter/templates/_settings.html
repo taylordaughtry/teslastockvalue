@@ -1,0 +1,14 @@
+{% import "_includes/forms" as forms %}
+<h2>Lamplighter Settings</h2>
+<p><a href="https://lamplighter.io">Lamplighter</a> is a service that securely monitors your sites. Once a site token is entered on this page, the site will be able to send add-on and site information to Lamplighter.</p>
+{% if settings.apiKey %}
+	You have successfully connected the Lamplighter plug-in.  To disconnect your site, remove the site token and Save.
+{% endif %}
+{{ forms.textField({
+        label: "Site Token"|t,
+        id: 'apiKey',
+        name: 'apiKey',
+        instructions: "Enter the Lamplighter site token found on the site settings page in the Lamplighter application."|t,
+        value: settings.apiKey,
+        autofocus: true,
+}) }}
