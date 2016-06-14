@@ -2,17 +2,26 @@ Wee.fn.make('common', {
 	init: function() {
 		var scope = this.$private;
 
-		scope.initializeStorage();
-		scope.initializeApp();
 		scope.addHelpers();
 		scope.bind();
-		scope.monitorStock();
 	}
 }, {
 	bind: function() {
 		var scope = this;
 
 		$.events.on({
+			'ref:symbolForm': {
+				'submit': function(e, el) {
+					$('ref:symbolSelection').hide();
+
+					scope.initializeApp($(el).find('input').val());
+
+					$('ref:actions').show();
+
+					e.preventDefault();
+				}
+			},
+
 			'ref:buy': {
 				'click': function(e) {
 					var data = Wee.app.stockManager.$get();
@@ -33,9 +42,11 @@ Wee.fn.make('common', {
 		});
 	},
 
-	initializeApp: function() {
+	initializeApp: function(symbol) {
+		this.initializeStorage(symbol);
+
 		Wee.data.request({
-			url: 'https://www.google.com/finance/info?q=TSLA',
+			url: 'https://www.google.com/finance/info?q=' + symbol,
 			jsonp: true,
 			success: function(response) {
 				var data = {};
@@ -53,9 +64,11 @@ Wee.fn.make('common', {
 				});
 			}
 		});
+
+		this.monitorStock();
 	},
 
-	initializeStorage: function() {
+	initializeStorage: function(symbol) {
 		if (Wee._win.localStorage && localStorage.getItem('trader')) {
 			return;
 		}
@@ -69,6 +82,7 @@ Wee.fn.make('common', {
 			stock: 0
 		};
 
+		localStorage.setItem('symbol', symbol);
 		localStorage.setItem('trader', JSON.stringify(trader));
 	},
 
@@ -95,10 +109,10 @@ Wee.fn.make('common', {
 		localStorage.setItem('trader', JSON.stringify(data.trader));
 	},
 
-	monitorStock: function() {
+	monitorStock: function(symbol) {
 		setInterval(function() {
 			Wee.data.request({
-				url: 'https://www.google.com/finance/info?q=TSLA',
+				url: 'https://www.google.com/finance/info?q=' + symbol,
 				jsonp: true,
 				success: function(response) {
 					Wee.app.stockManager.$set('symbol', response[0].t);

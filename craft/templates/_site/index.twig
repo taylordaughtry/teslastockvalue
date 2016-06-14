@@ -2,9 +2,15 @@
 
 {% block content %}
 
+	<div class="symbol-selection" data-ref="symbolSelection">
+		<form action="" data-ref="symbolForm">
+		<input type="text" required>
+		<input type="submit" class="button symbol-selection__submit" value="Use this symbol">
+	</div>
+
 	<div class="stock" data-ref="stock"></div>
 
-	<div class="actions">
+	<div class="actions js-hide" data-ref="actions">
 		<span class="button actions__button" data-ref="buy">Buy</span>
 		<span class="button actions__button" data-ref="sell">Sell</span>
 	</div>
