@@ -33,29 +33,6 @@ Wee.fn.make('common', {
 		});
 	},
 
-	modifyStock: function(type, shifted, ctrled) {
-		var data = Wee.app.stockManager.$get(),
-			amount = ctrled ? 100 : shifted ? 10 : 1,
-			stockPrice = data.price * amount,
-			capital;
-
-		if (type == 'buy') {
-			capital = data.trader.capital - parseInt(stockPrice);
-
-			Wee.app.stockManager.$set('trader.capital', capital);
-			Wee.app.stockManager.$set('trader.earnings', capital - 100000);
-			Wee.app.stockManager.$set('trader.stock', data.trader.stock + amount);
-		} else {
-			capital = data.trader.capital + parseInt(stockPrice);
-
-			Wee.app.stockManager.$set('trader.capital', capital);
-			Wee.app.stockManager.$set('trader.stock', Math.abs(data.trader.stock - amount));
-			Wee.app.stockManager.$set('trader.earnings', capital - 100000);
-		}
-
-		localStorage.setItem('trader', JSON.stringify(data.trader));
-	},
-
 	initializeApp: function() {
 		Wee.data.request({
 			url: 'https://www.google.com/finance/info?q=TSLA',
@@ -93,6 +70,29 @@ Wee.fn.make('common', {
 		};
 
 		localStorage.setItem('trader', JSON.stringify(trader));
+	},
+
+	modifyStock: function(type, shifted, ctrled) {
+		var data = Wee.app.stockManager.$get(),
+			amount = ctrled ? 100 : shifted ? 10 : 1,
+			stockPrice = data.price * amount,
+			capital;
+
+		if (type == 'buy') {
+			capital = data.trader.capital - parseInt(stockPrice);
+
+			Wee.app.stockManager.$set('trader.capital', capital);
+			Wee.app.stockManager.$set('trader.earnings', capital - 100000);
+			Wee.app.stockManager.$set('trader.stock', data.trader.stock + amount);
+		} else {
+			capital = data.trader.capital + parseInt(stockPrice);
+
+			Wee.app.stockManager.$set('trader.capital', capital);
+			Wee.app.stockManager.$set('trader.stock', Math.abs(data.trader.stock - amount));
+			Wee.app.stockManager.$set('trader.earnings', capital - 100000);
+		}
+
+		localStorage.setItem('trader', JSON.stringify(data.trader));
 	},
 
 	monitorStock: function() {
