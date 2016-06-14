@@ -15,23 +15,18 @@ Wee.fn.make('common', {
 		$.events.on({
 			'ref:buy': {
 				'click': function(e) {
-					var data = Wee.app.stockManager.$get(),
-						shifted = e.shiftKey,
-						ctrled = e.altKey;
+					var data = Wee.app.stockManager.$get();
 
 					if (data.trader.capital > data.price) {
-						scope.modifyStock('buy', shifted, ctrled);
+						scope.modifyStock('buy', e.shiftKey, e.altKey);
 					}
 				}
 			},
 
 			'ref:sell': {
 				'click': function(e) {
-					var shifted = e.shiftKey,
-						ctrled = e.altKey;
-
 					if (Wee.app.stockManager.$get('trader.stock')) {
-						scope.modifyStock('sell', shifted, ctrled);
+						scope.modifyStock('sell', e.shiftKey, e.altKey);
 					}
 				}
 			}
