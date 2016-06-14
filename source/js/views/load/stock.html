@@ -1,0 +1,25 @@
+<h1 class="stock__symbol">{{ symbol }}</h1>
+<span class="stock__price">${{ price }}</span>
+<div class="stock__deltas">
+	<span class="stock__absolute-change -negative">{{ absoluteChange }}</span>
+	<span class="stock__percentage-change -negative">{{ percentChange }}%</span>
+</div>
+
+<div class="stats">
+	<div class="stats__column">
+		<span class="stats__subtitle">Capital</span>
+		<span class="stats__capital">${{ trader.capital|formatMoney() }}</span>
+	</div>
+	<div class="stats__column">
+		<span class="stats__subtitle">Time Left</span>
+		<span class="stats__time-left">{{ trader.timeLeft|formatTime() }}</span>
+	</div>
+	<div class="stats__column">
+		<span class="stats__subtitle">Earnings</span>
+		<span class="stats__earnings">${{ trader.earnings|formatMoney() }}</span>
+	</div>
+	<div class="stats__column">
+		<span class="stats__subtitle">Stock</span>
+		<span class="stats__earnings">{{ trader.stock }}</span>
+	</div>
+</div>

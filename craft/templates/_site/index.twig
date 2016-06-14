@@ -1,5 +1,45 @@
 {% extends craft.config.defaultLayout %}
 
 {% block content %}
-	{{ entry.body }}
+
+	<div class="stock" data-ref="stock"></div>
+
+	<div class="actions">
+		<span class="button actions__button" data-ref="buy">Buy</span>
+		<span class="button actions__button" data-ref="sell">Sell</span>
+	</div>
+
+	<div class="info">
+		<p>
+			You have $100,000. Your goal to is earn as much as possible in one day from Tesla stock.
+		</p>
+	</div>
+
+	<div class="leaders">
+		<h3 class="leaders__title">Current Leaders</h3>
+		<table class="leaders__table">
+			<tr>
+				<td>John Doe</td>
+				<td>$2,583.21</td>
+			</tr>
+			<tr>
+				<td>John Doe</td>
+				<td>$2,583.21</td>
+			</tr>
+			<tr>
+				<td>John Doe</td>
+				<td>$2,583.21</td>
+			</tr>
+			<tr>
+				<td>John Doe</td>
+				<td>$2,583.21</td>
+			</tr>
+			<tr>
+				<td>John Doe</td>
+				<td>$2,583.21</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+
 {% endblock %}

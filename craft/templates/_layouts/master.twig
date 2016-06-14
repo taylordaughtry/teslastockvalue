@@ -44,6 +44,9 @@
 	<meta property="article:modified_time" content="{{ entry.dateUpdated.iso8601 }}" itemprop="dateModified">
 	{% endif %}
 
+	<script src="https://use.typekit.net/gal2zfh.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
 	<link rel="stylesheet" href="{{ conf.assetUrl }}/css/style.min.css?{{ conf.cssVersion }}">
 	{{ system.headerResources|raw }}
 	{{ getHeadHtml() }}
@@ -62,19 +65,9 @@
 </head>
 <body>
 	<div class="container">
-		<header role="banner">
-			<a href="/" rel="home">
-				<img src="{{ conf.assetUrl }}/img/brand.svg" alt="{{ siteName }}">
-			</a>
-		</header>
-
 		<main role="main">
 			{{ block('content') }}
 		</main>
-
-		<footer role="contentinfo">
-			<small>&copy; {{ now.year }}</small>
-		</footer>
 	</div>
 
 	{{ system.leadFooterResources|raw }}

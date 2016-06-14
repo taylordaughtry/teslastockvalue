@@ -15,29 +15,114 @@
 \*------------------------------------*/
 
 body {
-	// ...
+	.background(@primary) !important; // TODO: why doesn't variables overwrite wee?
+}
+
+.-negative {
+	.color(@negative);
+}
+.-positive {
+	.color(@positive);
 }
 
 
 
 
-
 /*------------------------------------*\
-	# Header
+	# Stock
 \*------------------------------------*/
 
-.header {
-	// ...
+.stock {
+	.centered-block(55);
+	.margin(top; 10);
+	.relative();
+	&__symbol {
+		.font-size(12; 0.77);
+	}
+	&__price {
+		.absolute(0; 0);
+		.bold();
+		.font-size(6; 1);
+		.inline-block();
+	}
+	&__deltas {
+		.absolute(7.2; 0);
+		.font-size(3.4);
+		.line-height(0.6);
+		.width(20.5);
+	}
+	&__percentage-change {
+		.absolute(false; 0);
+	}
 }
-
-
-
-
-
-/*------------------------------------*\
-	# Footer
-\*------------------------------------*/
-
-.footer {
-	// ...
+.info {
+	.align(center);
+	.centered-block(50);
+	.margin(top; 10);
+}
+.leaders {
+	.centered-block(50);
+	.margin(top; 5);
+	&__title {
+		.align(center);
+	}
+	&__table {
+		.border(shade(@primary, 30%); 1);
+	}
+	tr {
+		&:nth-child(odd) {
+			td {
+				.background(darken(@primary, 10%));
+			}
+		}
+		&:nth-child(even) {
+			td {
+				.background(darken(@primary, 5%));
+			}
+		}
+	}
+	td {
+		&:last-child {
+			.align(right);
+		}
+	}
+}
+.stats {
+	.align(center);
+	.clearfix();
+	.padding(vertical; 10; 2);
+	&__column {
+		.inline-column(1; 4);
+	}
+	&__subtitle {
+		.block();
+		.color(tint(@primary, 50%));
+		.font-size(1.4; 1);
+		.letter-spacing(0.1);
+		.spaced(1);
+		.uppercase();
+	}
+	&__capital {
+		.block();
+		.font-size(3; 1);
+	}
+	&__earnings,
+	&__time-left {
+		.block();
+		.font-size(3; 1);
+	}
+}
+.actions {
+	.align(center);
+	.margin(top; 6);
+	&__button {
+		.background(@negative);
+		.margin(horizontal; 2);
+		.user-select();
+		&:hover {
+			.background(@white);
+			.cursor();
+			.primary();
+		}
+	}
 }
